@@ -1,0 +1,17 @@
+
+checkpoints/
+dataset/
+logs/
+
+# python temp
+__pycache__/
+*.py[cod]
+
+# env
+venv/
+env/
+.venv/
+
+
+.vscode/
+.idea/
