@@ -20,7 +20,7 @@ def visualize(pic_dir=None):
     model.eval()
 
     image_path = IMG_PATH
-    # 2. preprocessing
+    # preprocessing
     if pic_dir is not None:
         image_files = [
             f

@@ -34,10 +34,11 @@ TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 CHECKPOINT_DIR = os.path.join("checkpoints", TIMESTAMP)
 LOG_DIR = os.path.join("logs", TIMESTAMP)
 
-# transform
+#normalization 
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 
+# transform
 train_transform = transforms.Compose(
     [
         transforms.Resize((IMG_SIZE, IMG_SIZE)),
