@@ -15,7 +15,7 @@ from src.model.model import MobileNetAimBot
 p = psutil.Process(os.getpid())
 p.nice(psutil.REALTIME_PRIORITY_CLASS)
 
-CHECKPOINT_PATH = "checkpoints/2025-12-27_03-01-41/best_model_weights.pth"  # 改這裡！
+CHECKPOINT_PATH = "checkpoints/2025-12-27_03-01-41/best_model_weights.pth"  
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 FOV_SIZE = 350
@@ -45,7 +45,6 @@ except Exception as e:
     print(f"Can't load Logitech DLL: {e}")
     print("make sure ghub_device.dll exist")
 
-    # Fallback to win32api (但在 Apex 裡沒用)
     def move_mouse(x, y):
         win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, int(x), int(y), 0, 0)
 # --------------------------------------------------------------------
@@ -164,11 +163,9 @@ class Aimbot:
         try:
             dummy_input = torch.randn(1, 3, 256, 256).to(DEVICE)
 
-            # 讓 Torch 跑一次模型，記錄下所有的計算路徑
-            # 這會產生一個優化過的 ScriptModule
+
             self.model = torch.jit.trace(self.model, dummy_input)
 
-            # 3. 強制優化 (Optional, 像是 Frozen graph)
             self.model = torch.jit.freeze(self.model)
 
             print("TorchScript Tracing sucessful")
@@ -216,10 +213,10 @@ class Aimbot:
         print(f"截圖區域: {FOV_SIZE}*{FOV_SIZE}")
 
     def preprocess(self, img_np):
-        # mss 截出來是 BGRA，要轉 RGB
+        # mss is bgra
         # img_rgb = cv2.cvtColor(img_np, cv2.COLOR_BGRA2RGB)
         img_rgb = img_np
-        # 如果 FOV_SIZE 不等於 256，這裡要加 cv2.resize
+       
         img_rgb = cv2.resize(img_rgb, (256, 256))
 
         # Normalize
